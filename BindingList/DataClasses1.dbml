@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="JayaCosmeticShop" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-RACLV28\SQLEXPRESS;Initial Catalog=JayaCosmeticShop;Integrated Security=True" SettingsObjectName="BindingList.Properties.Settings" SettingsPropertyName="JayaCosmeticShopConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Category" Member="Categories">
+    <Type Name="Category">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Category_Product" Member="Products" ThisKey="ID" OtherKey="ID_Category" Type="Product" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Product" Member="Products">
+    <Type Name="Product">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="[ID Category]" Member="ID_Category" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[Price Customer]" Member="Price_Customer" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[Price Sales]" Member="Price_Sales" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Product_DetailTransaction" Member="DetailTransactions" ThisKey="ID" OtherKey="ID_Product" Type="DetailTransaction" />
+      <Association Name="Category_Product" Member="Category" ThisKey="ID_Category" OtherKey="ID" Type="Category" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DetailTransaction" Member="DetailTransactions">
+    <Type Name="DetailTransaction">
+      <Column Name="[ID Transaction]" Member="ID_Transaction" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="[ID Product]" Member="ID_Product" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Product_DetailTransaction" Member="Product" ThisKey="ID_Product" OtherKey="ID" Type="Product" IsForeignKey="true" />
+      <Association Name="HeaderTransaction_DetailTransaction" Member="HeaderTransaction" ThisKey="ID_Transaction" OtherKey="ID" Type="HeaderTransaction" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Employee" Member="Employees">
+    <Type Name="Employee">
+      <Column Name="ID" Type="System.String" DbType="Char(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="[Date of Birth]" Member="Date_of_Birth" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Gender" Type="System.Char" DbType="Char(1) NOT NULL" CanBeNull="false" />
+      <Column Name="[Phone Number]" Member="Phone_Number" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Address" Type="System.String" DbType="NText NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="Status" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="[ID Leader]" Member="ID_Leader" Type="System.String" DbType="Char(5)" CanBeNull="true" />
+      <Association Name="Employee_Employee" Member="Employees" ThisKey="ID" OtherKey="ID_Leader" Type="Employee" />
+      <Association Name="Employee_HeaderTransaction" Member="HeaderTransactions" ThisKey="ID" OtherKey="ID_Employee" Type="HeaderTransaction" />
+      <Association Name="Employee_Employee" Member="Employee1" ThisKey="ID_Leader" OtherKey="ID" Type="Employee" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HeaderTransaction" Member="HeaderTransactions">
+    <Type Name="HeaderTransaction">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="[ID Employee]" Member="ID_Employee" Type="System.String" DbType="Char(5) NOT NULL" CanBeNull="false" />
+      <Column Name="Time" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="HeaderTransaction_DetailTransaction" Member="DetailTransactions" ThisKey="ID" OtherKey="ID_Transaction" Type="DetailTransaction" />
+      <Association Name="Employee_HeaderTransaction" Member="Employee" ThisKey="ID_Employee" OtherKey="ID" Type="Employee" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ImportDataBenar" Member="ImportDataBenars">
+    <Type Name="ImportDataBenar">
+      <Column Name="ID" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="[ID Employee]" Member="ID_Employee" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="[Name Employee]" Member="Name_Employee" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="[Password Employee]" Member="Password_Employee" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="[DoB Employee]" Member="DoB_Employee" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="[Gender Employee]" Member="Gender_Employee" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="[Phone Employee]" Member="Phone_Employee" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="[Address Employee]" Member="Address_Employee" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="[Status Employee]" Member="Status_Employee" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="[Leader Name]" Member="Leader_Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="[Time Transaction]" Member="Time_Transaction" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="[ID Product]" Member="ID_Product" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="[Name Product]" Member="Name_Product" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="[Category Product]" Member="Category_Product" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="[Price Customer]" Member="Price_Customer" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="[Price Sales]" Member="Price_Sales" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Quantity" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Subtotal" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>
